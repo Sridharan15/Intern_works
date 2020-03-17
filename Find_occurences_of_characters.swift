@@ -7,4 +7,7 @@ for each in paragraph {
         dict["\(each)", default: 0] += 1
     }
 }
-print(dict)
+let sortedDict = dict.sorted(by: <)  //sort the elements to print an ordered dict
+print(sortedDict)
+print(paragraph.length)             //print the total string count
+print(dict.count)                   //print the unique string count
