@@ -14,10 +14,6 @@ import Foundation
         self.chemistry = chemistry
         self.maths = maths
     }
-    func totalMarkOfStudents() -> [String] {
-        var total = [name,"\(id)","\(physics + chemistry + maths)" ]
-        return total
-    }
     func totalMarksOfAllStudents() -> [String] {
         let marks = [physics,chemistry,maths]
         let failed = marks.filter { $0 <= 45 }
@@ -48,10 +44,8 @@ for eachstudent in studentDetails {
     let tempMaths = each.components(separatedBy: "maths:")
     let maths = tempMaths[1].components(separatedBy: ",")
     //checking valid email address
-    let email = nameAndId[2]
-    let atAvailable = email.filter { $0 == "@"}
-    let dotAvailable = email.filter { $0 == "."}  
-    if atAvailable == "@" , dotAvailable == "." {
+    let email = nameAndId[2]  
+    if email.contains("@"), email.contains(".") {
         let nameBeforeAt = email.components(separatedBy: "@")
         let nameBeforeAndAfterDot = nameBeforeAt[1].components(separatedBy: ".")
         if nameBeforeAndAfterDot[0] != "" , nameBeforeAndAfterDot[1] != "" ,nameBeforeAt[0] != "" {
