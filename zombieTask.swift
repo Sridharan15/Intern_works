@@ -6,7 +6,7 @@ var totalKills = 0
 var each = 0
  var distanceOfZombies: [Int] = [2,3,3,3,4,5,6,7,8,9,10]
 while(each >= 0){
-    if distanceOfZombies[each] == 0 {
+    if distanceOfZombies[each] == 0 || bullets == 0 {
         print("Game Over!! Killed:",totalKills)
         break
     }
