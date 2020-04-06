@@ -32,5 +32,10 @@ while(each >= 0){
             each = 0
         }
     }
+    else {
+        for zombie in 0..<distanceOfZombies.count {
+            distanceOfZombies[zombie] -= 1
+        }
+    }
 }
 print(distanceOfZombies)
