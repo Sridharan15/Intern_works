@@ -1,6 +1,12 @@
-/*Problem Statement : There is a gun with few bullets and few zombies walking towards us. Our task is to kill them with the gun. Each zombie has different distances and it will be reduced because they are moving forward. We need to kill them before they reach us. We will gain a bullet if we kill two zombies one after another. When the distance of a zombie becomes zero we will die.
+/*Problem Statement : There is a gun with few bullets and few zombies walking towards us. 
+                      Our task is to kill them with the gun. 
+                      Each zombie has different distances and it will be reduced because they are moving forward. 
+                      We need to kill them before they reach us. We will gain a bullet if we kill two zombies one after another. 
+                      When the distance of a zombie becomes zero we will die.
 
-Advanced Gun : Some beast level zombies take 3 bullets to die.If we kill 10 zombies then we will get one Advanced Gun.Advanced gun can take only one bullet to kill even it's beast level zombie. */
+Advanced Gun : Some beast level zombies take 3 bullets to die.
+               If we kill 10 zombies then we will get one Advanced Gun.
+               Advanced gun can take only one bullet to kill even it's beast level zombie. */
 
 let guns = 1
 var advancedGun = 0 
