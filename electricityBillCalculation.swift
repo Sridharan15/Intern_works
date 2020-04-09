@@ -1,3 +1,12 @@
+/*,
+Need to calculate Electricity bill for every two months based on below tariffs.  
+For domestic
+For first 100 units Rs 0/unit
+For next 100 units Rs 3.50/unit
+For next 300 units Rs 4.60/unit
+For unit above 500  Rs 6.60/unit
+An additional surcharge of 20% is added to the bill
+Get random numbers as daily consumable units. For domestic random number generation should be in between 1 - 10*/
 let billType = "domestic"
 var amount : Double = 0
 if billType == "domestic" {
