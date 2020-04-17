@@ -34,7 +34,7 @@ if billType == "domestic" {
         amount = Float(100 * 0) + (Float(200 - 100) * 3.50) + (Float(units - 200) * 4.60)
     }
     else {
-        amount = Float(units) * 6.60
+        amount = Float(100 * 0) + (Float(200 - 100) * 3.50) + (Float(500 - 200) * 4.60) + (Float(units - 500) * 6.60)
     }
     let finalAmount = amount + serviceCharge
     print("Bill to be paid is Rs.",finalAmount)
