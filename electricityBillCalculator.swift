@@ -49,7 +49,7 @@ func commercial() {
     var amount : Float = 0
     var perDayUnitForTwoMonths: [Int] = []
     let serviceCharge: Float = 290
-    let  rateOfFirstHundredUnits: Float = 5.00
+    let rateOfFirstHundredUnits: Float = 5.00
     let rateAboveHundredUnits: Float = 8.05
     for each in 0..<60 {
         let perDayUnit = Int.random(in:10...100)
@@ -68,8 +68,8 @@ func commercial() {
 }
 let billType = "domestic"
 if billType == type.domestic.rawValue {
-    domestic()
+    domestic()  //calls domestic function to calculate bills for domestic purposes
 }
 else {
-    commercial()
+    commercial()  //calls commercial function to calculate bills for commercial purposes
 }
