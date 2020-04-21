@@ -45,23 +45,29 @@ func calculateBillForDomesticPurposes() {
     let serviceCharge: Float = 50
     var amountWithoutServiceCharge: Float = 0
     var tariff: DomesticTariffRates
-    let totalUnits = calculateTotalUnits(rangeStarts: 1, rangeEnds: 10)
+    var totalUnits = calculateTotalUnits(rangeStarts: 1, rangeEnds: 10)
     print("Total Units consumed:",totalUnits)
-    if totalUnits < 100 {
-        tariff = .firstHundred
-        amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 0) 
-    }
-    else if totalUnits > 100 && totalUnits < 201 {
-        tariff = .nextHundred
-        amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 100)
-    }
-    else if totalUnits > 200 && totalUnits < 501 {
-        tariff = .nextThreeHundred
-        amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 200)
-    }
-    else {
-        tariff = .aboveFiveHundred
-        amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 500)
+    while(totalUnits > 0) {
+        if totalUnits < 101 {
+            tariff = .firstHundred
+            amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 0)
+            break 
+        }
+        else if totalUnits > 100 && totalUnits < 201 {
+            tariff = .nextHundred
+            amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 100)
+            totalUnits = 100
+        }
+        else if totalUnits > 200 && totalUnits < 501 {
+            tariff = .nextThreeHundred
+            amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 200)
+            totalUnits = 200
+        }
+        else {
+            tariff = .aboveFiveHundred
+            amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 500)
+            totalUnits = 500
+        }
     }
     let finalAmountToBePaid = amountWithoutServiceCharge + serviceCharge
     print("Bill to be Paid: Rs.",finalAmountToBePaid) 
@@ -71,20 +77,24 @@ func calculateBillForCommercialPurposes() {
     let serviceCharge: Float = 290
     var amountWithoutServiceCharge: Float = 0
     var tariff: CommercialTariffRates
-    let totalUnits = calculateTotalUnits(rangeStarts: 10, rangeEnds: 100)
+    var totalUnits = calculateTotalUnits(rangeStarts: 10, rangeEnds: 100)
     print("Total Units consumed:",totalUnits)
-    if totalUnits < 100 {
-        tariff = .firstHundred
-        amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 0) 
+    while(totalUnits > 0) {
+        if totalUnits < 101 {
+            tariff = .firstHundred
+            amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 0) 
+            break
+        }
+        else {
+            tariff = .aboveHundred
+            amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 100)
+            totalUnits = 100
+        }
     }
-    else {
-        tariff = .aboveHundred
-        amountWithoutServiceCharge += calculateAmount(units: totalUnits, rate: tariff.rawValue, calculatedRange: 100)
         let finalAmountToBePaid = amountWithoutServiceCharge + serviceCharge
         print("Bill to be Paid: Rs.",finalAmountToBePaid)
-    }
 }
-let type: BillType = .commercial
+let type: BillType = .domestic
 switch type {
     case .domestic :
         calculateBillForDomesticPurposes()
