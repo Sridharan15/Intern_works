@@ -66,13 +66,13 @@ enum BillType {
 let type: BillType = .commercial 
 switch type {
     case .domestic:
-        var domesticRangeAndTariff = ElectricityBillCalculator(rangesAndTariffs: [[100,0],[200,3.50],[500,4.60],[501,6.60]], serviceCharge: 50)
-        let totalUnits = Float(domesticRangeAndTariff.calculateTotalUnits(rangeStarts: 1, rangeEnds: 10))
+        var domesticBill = ElectricityBillCalculator(rangesAndTariffs: [[100,0],[200,3.50],[500,4.60],[501,6.60]], serviceCharge: 50)
+        let totalUnits = Float(domesticBill.calculateTotalUnits(rangeStarts: 1, rangeEnds: 10))
         print("Total units consumed:",totalUnits)
-        domesticRangeAndTariff.calculateTotalAmount(units: totalUnits)
+        domesticBill.calculateTotalAmount(units: totalUnits)
     case .commercial:
-        var commercialRangeAndTariff = ElectricityBillCalculator(rangesAndTariffs: [[100,5.00],[200,8.05]], serviceCharge: 290)   
-        let totalUnits = Float(commercialRangeAndTariff.calculateTotalUnits(rangeStarts: 10, rangeEnds: 100))
+        var commercialBill = ElectricityBillCalculator(rangesAndTariffs: [[100,5.00],[200,8.05]], serviceCharge: 290)   
+        let totalUnits = Float(commercialBill.calculateTotalUnits(rangeStarts: 10, rangeEnds: 100))
         print("Total units consumed:",totalUnits)
-        commercialRangeAndTariff.calculateTotalAmount(units: totalUnits)
+        commercialBill.calculateTotalAmount(units: totalUnits)
 }
