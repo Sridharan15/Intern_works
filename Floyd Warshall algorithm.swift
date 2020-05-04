@@ -17,7 +17,7 @@ func floydWarshall(graph: [[Int]]) {
     printTheShortestDistances(distance: distanceBetweenVertices)
 }
 func printTheShortestDistances(distance: [[Int]]) {
-    print("Following matrix shows the shortest distances between every pair of vertices")
+    print("Following matrix shows the shortest paths between every pair of vertices")
     for eachRow in 0..<vertices {
         for eachColumn in 0..<vertices {
             if distance[eachRow][eachColumn] == INF {
