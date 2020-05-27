@@ -4,7 +4,6 @@ output: Sorted array with minimum swap count, sum of difference of values */
 
 let sizeOfTheArray = 5
 var arrayElements = [-5,-90,5,30,2]
-let indexPosition = 3
 func doSelectionSort(elementsOfArray: inout [Int]) -> Int {
     var totalSwaps = 0
     for currentIndex in 0..<sizeOfTheArray {
@@ -34,6 +33,7 @@ var swapCount = doSelectionSort(elementsOfArray: &arrayElements)
 print("Sorted Array is",arrayElements)
 print("Total Swap Count:",swapCount)
 
+let indexPosition = 3
 if indexPosition > 0 && indexPosition < sizeOfTheArray {
   print("Sum of subtracted values is \(doCalculation(indexPosition: indexPosition))")
 }
