@@ -1,9 +1,12 @@
+/*sort the elements of array with minimum swaps. Also find the sum of difference of values from the given index position in reverse order.
+Inputs: Array size, Array elements, Index position
+output: Sorted array with minimum swap count, sum of difference of values */
+
 let sizeOfTheArray = 5
-var arrayElements = [99,25,60,32,44]
-public var swapCount = 0
-var totalValue = 0
-var index = 3
-func doSelectionSort(elementsOfArray: inout [Int]) -> ([Int], Int) {
+var arrayElements = [-5,-90,5,30,2]
+let indexPosition = 3
+func doSelectionSort(elementsOfArray: inout [Int]) -> Int {
+    var totalSwaps = 0
     for currentIndex in 0..<sizeOfTheArray {
         var minimumIndex = currentIndex
         for eachElement in (currentIndex + 1)..<sizeOfTheArray {
@@ -13,15 +16,24 @@ func doSelectionSort(elementsOfArray: inout [Int]) -> ([Int], Int) {
         }
         if minimumIndex != currentIndex {
             elementsOfArray.swapAt(minimumIndex,currentIndex)
-            swapCount += 1
+            totalSwaps += 1
         }
     }
-    return (elementsOfArray,swapCount)
+    return totalSwaps
 }
-doSelectionSort(elementsOfArray: &arrayElements)
-print(arrayElements)
+
+func doCalculation(indexPosition: Int)-> Int {
+  var sumOfSubtractedValues = 0
+  for each in stride(from: indexPosition, to: 0, by: -1) {
+    sumOfSubtractedValues += arrayElements[each] - arrayElements[each - 1]
+  }
+  return sumOfSubtractedValues
+}
+
+var swapCount = doSelectionSort(elementsOfArray: &arrayElements)
+print("Sorted Array is",arrayElements)
 print("Total Swap Count:",swapCount)
-for each in stride(from: index, to: 0, by: -1) {
-    totalValue += arrayElements[each] - arrayElements[each - 1]
+
+if indexPosition > 0 && indexPosition < sizeOfTheArray {
+  print("Sum of subtracted values is \(doCalculation(indexPosition: indexPosition))")
 }
-print(totalValue)
