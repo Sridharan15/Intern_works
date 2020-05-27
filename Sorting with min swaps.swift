@@ -37,3 +37,6 @@ print("Total Swap Count:",swapCount)
 if indexPosition > 0 && indexPosition < sizeOfTheArray {
   print("Sum of subtracted values is \(doCalculation(indexPosition: indexPosition))")
 }
+else {
+  print("Enter valid index position")
+}
