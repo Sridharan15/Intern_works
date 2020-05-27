@@ -29,7 +29,7 @@ func doCalculation(indexPosition: Int)-> Int {
   return sumOfSubtractedValues
 }
 
-var swapCount = doSelectionSort(elementsOfArray: &arrayElements)
+let swapCount = doSelectionSort(elementsOfArray: &arrayElements)
 print("Sorted Array is",arrayElements)
 print("Total Swap Count:",swapCount)
 
