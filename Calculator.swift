@@ -1,5 +1,5 @@
 /*Create a simple calculator and calculate the values based on the order of precedence
-Input will be string (e.g., (2*3)+3*5)
+Input will be string (e.g., "(2*3)+3*5")
 Here the evaluation will happen based on precedence order as = (2*3)+3*5
                                                              = 6+3*5
                                                              = 6+15
