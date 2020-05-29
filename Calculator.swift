@@ -1,9 +1,16 @@
+/*Create a simple calculator and calculate the values based on the order of precedence
+Input will be string (e.g., (2*3)+3*5)
+Here the evaluation will happen based on precedence order as = (2*3)+3*5
+                                                             = 6+3*5
+                                                             = 6+15
+                                                             = 21 */
+//convert infix to postfix expression
 func infixToPostfix(infixExpression: String) -> String {
     var precedence: [Character: Int] = ["*": 3, "/": 3, "+": 2, "-": 2, "(": 1]
     let numbers = "1234567890"
-    var operatorList: [Character] = []
-    var postfixList: [Character] = []
-    var expressionList: [Character] = Array(createExpressionList(infixExpression: infixExpression))
+    var operatorList: [Character] = []  //store operators
+    var postfixList: [Character] = []   //store numbers
+    var expressionList: [Character] = Array(createExpressionList(infixExpression: infixExpression)) //calls function to separate the expression correctly
     expressionList.removeAll{$0 == "0"}
     for each in expressionList {
         if numbers.contains(each) {
@@ -31,6 +38,7 @@ func infixToPostfix(infixExpression: String) -> String {
     }
     return String(postfixList)
 }
+//separate the expression correctly
 func createExpressionList(infixExpression: String) -> [Character] {
     let infixExpression = Array(infixExpression)
     let symbolsArray = ["+","-","*","/","(",")"]
@@ -53,6 +61,8 @@ func createExpressionList(infixExpression: String) -> [Character] {
     }
     return expressionList
 }
+
+//evaluate the postfix expression
 func postfixEvaluation(postfixExpression: String) -> Double {
     var operandList: [Double] = []
     let expressionList = Array(postfixExpression)
@@ -71,6 +81,7 @@ func postfixEvaluation(postfixExpression: String) -> Double {
     return operandList.removeLast()
 }
 
+//perform calculations based on  operators
 func doCalculation(operators: Character, firstOperand: Double, secondOperand: Double) -> Double {
     switch operators {
         case "+" :
@@ -84,8 +95,9 @@ func doCalculation(operators: Character, firstOperand: Double, secondOperand: Do
         default : 
             return 0                
     }
-} 
-let expression = "((3+5)*5+(5-9))/5".replacingOccurrences(of:  " ", with: "")
+}
+
+let expression = "((3+5)*5+(5-9))/5".replacingOccurrences(of:  " ", with: "")  //remove the whitespaces
 let postfixConversion: String = infixToPostfix(infixExpression: expression)
 let finalResult: Double = postfixEvaluation(postfixExpression: postfixConversion)
 print(expression + " = " + "\(finalResult)")
