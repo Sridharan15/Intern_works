@@ -93,14 +93,19 @@ func postfixEvaluation(postfixExpression: [String]) -> Double {
     var operandList: [Double] = []
     // let expressionList = Array(postfixExpression)
     let symbols: [String] = ["+","-","*","/","(",")","."]
+    let symbolsBasedValues = ["+": 0.0, "-": 0.0, "*": 1.0, "/": 1.0]
+    var result = 0.0
     for each in postfixExpression {
         if symbols.contains(each) != true {
             operandList.append(Double(String(each)) ?? 0)
         }
         else {
-            let secondOperand = operandList.removeLast()
-            let firstOperand = operandList.removeLast()
-            let result = doCalculation(operators: each, firstOperand: firstOperand, secondOperand: secondOperand)
+            if operandList.count == 1 {
+                result = doCalculation(operators: each, secondOperand: operandList.removeLast(), firstOperand: symbolsBasedValues[each]!)
+            }
+            else {
+                result = doCalculation(operators: each, secondOperand: operandList.removeLast(), firstOperand: operandList.removeLast())
+            }
             operandList.append(result)
         }
     }
@@ -108,7 +113,7 @@ func postfixEvaluation(postfixExpression: [String]) -> Double {
 }
 
 //perform calculations based on  operators
-func doCalculation(operators: String, firstOperand: Double, secondOperand: Double) -> Double {
+func doCalculation(operators: String, secondOperand: Double, firstOperand: Double) -> Double {
     switch operators {
         case "+" :
             return firstOperand + secondOperand
@@ -117,7 +122,7 @@ func doCalculation(operators: String, firstOperand: Double, secondOperand: Doubl
         case "*" :
             return firstOperand * secondOperand
         case "/" :
-            return firstOperand / secondOperand    
+            return firstOperand / secondOperand  
         default : 
             return 0                
     }
