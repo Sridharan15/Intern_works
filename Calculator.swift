@@ -12,7 +12,6 @@ let symbolsArray = ["+","-","*","/","(",")","^"]
 func createExpressionList(infixExpression: [Character]) -> [String] {
     var temporaryValue = 0
     var infixExpression = Array(infixExpression)
-    print(infixExpression)
     var flag = 0
     var index = 0
     var expressionList: [String] = []
