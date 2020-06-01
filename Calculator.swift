@@ -6,52 +6,80 @@ Here the evaluation will happen based on precedence order as = (2*3)+3*5
                                                              = 21 */
 import Foundation
 let expression = Array("1+2.2".replacingOccurrences(of:  " ", with: ""))  //remove the whitespaces
-let symbolsArray = ["+","-","*","/","(",")",".","^"]
+let symbolsArray = ["+","-","*","/","(",")","^"]
 
 //creating infixExpression
 func createExpressionList(infixExpression: [Character]) -> [String] {
     var temporaryValue = 0
+    var infixExpression = Array(infixExpression)
+    print(infixExpression)
     var flag = 0
+    var index = 0
     var expressionList: [String] = []
-    for var index in 0..<infixExpression.count {
-        if symbolsArray.contains(String(infixExpression[index])) != true {
-            temporaryValue *= 10
-            temporaryValue += (Int(String(infixExpression[index])) ?? 0)
-            flag = 1            
+    while index < infixExpression.count  {
+        var startingIndex = 0
+        if index < infixExpression.count - 1  {
+            if infixExpression[index + 1] == "." {
+                startingIndex  = index
+                while index < infixExpression.count - 1 {
+                    if symbolsArray.contains(String(infixExpression[index])) != true {
+                        index += 1
+                    }
+                    else if symbolsArray.contains(String(infixExpression[index])) {
+                        index -= 1
+                        break
+                    }
+                    else {
+                        index += 1
+                        break
+                    }
+                }
+                expressionList.append(String(infixExpression[startingIndex...index]))
+            
+            }
+            else if symbolsArray.contains(String(infixExpression[index])) != true {
+                temporaryValue *= 10
+                temporaryValue += (Int(String(infixExpression[index])) ?? 0)
+                flag = 1
+            }
+            else {
+                if flag == 1 {
+                    expressionList.append(String(temporaryValue))
+                }
+                if infixExpression[index] == "(" && index != 0  {
+                    if symbolsArray.contains(String(infixExpression[index - 1])) != true {
+                        expressionList.append("*")
+                    }
+                }
+                expressionList.append(String(infixExpression[index]))
+                if infixExpression[index] == ")" && index < infixExpression.count {
+                    if  infixExpression[index + 1] == "(" || symbolsArray.contains(String(infixExpression[index + 1])) != true{
+                        expressionList.append("*")
+                    }
+                }
+                temporaryValue = 0
+                flag = 0
+            }
         }
         else {
-            if flag == 1 {
-                expressionList.append(String(temporaryValue))
+            if index <= infixExpression.count - 1   {
+                if flag == 1 && symbolsArray.contains(String(infixExpression[index])) {
+                    expressionList.append(String(temporaryValue))
+                    expressionList.append(String(infixExpression[index]))
+                }
+                else if flag == 1 {
+                    temporaryValue = temporaryValue * 10 + (Int(String(infixExpression[index])) ?? 0)
+                    expressionList.append(String(temporaryValue))
+                }
+                else {
+                    expressionList.append(String(infixExpression[index]))
+                }
+                
             }
-            expressionList.append(String(infixExpression[index]))
-            temporaryValue = 0
-            flag = 0
-            if String(infixExpression[index]) == "." , String(infixExpression[index + 1]) == "0" {
-                expressionList.append(String(infixExpression[index + 1]))
-            }
         }
-        if index == infixExpression.count - 1 && symbolsArray.contains(String(infixExpression[index])) != true {
-            expressionList.append(String(temporaryValue))
-        }
+        index = index + 1
     }
-    return expressionList
-}
-
-func eliminateFloatProblem(_ expression: inout [String]) -> [String] {
-    for each in 0..<(expression.count - 1) {
-        if expression[each] == "." && expression[each + 1] != "0" {
-            expression[each - 1] = expression[each - 1] + expression[each] + expression[each + 1]
-            expression.remove(at: each)
-            expression.remove(at: each)
-        }
-        else if expression[each] == "." && expression[each + 1] == "0" {
-            expression[each - 1] = expression[each - 1] + expression[each] + expression[each + 1] + expression[each + 2]
-            expression.remove(at: each)
-            expression.remove(at: each)
-            expression.remove(at: each)
-        }
-    }
-    return expression
+    return expressionList  
 }
 //convert infix to postfix
 func infixToPostfix(infixExpression: [Character]) -> Double {
