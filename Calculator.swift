@@ -54,7 +54,7 @@ func eliminateFloatProblem(_ expression: inout [String]) -> [String] {
     return expression
 }
 //convert infix to postfix
-func infixToPostfix(infixExpression: [Character]) -> [String] {
+func infixToPostfix(infixExpression: [Character]) -> Double {
     var precedence = ["*": 3, "/": 3, "+": 2, "-": 2, "(": 1]
     var operatorList: [String] = []  //store operators
     var postfixList: [String] = []   //store numbers
