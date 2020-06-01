@@ -5,7 +5,7 @@ Here the evaluation will happen based on precedence order as = (2*3)+3*5
                                                              = 6+15
                                                              = 21 */
 import Foundation
-let expression = Array("1+2.2".replacingOccurrences(of:  " ", with: ""))  //remove the whitespaces
+let expression = Array("(-1 + 3 (3+8(9+8)))".replacingOccurrences(of:  " ", with: ""))  //remove the whitespaces
 let symbolsArray = ["+","-","*","/","(",")","^"]
 
 //creating infixExpression
@@ -86,10 +86,7 @@ func infixToPostfix(infixExpression: [Character]) -> Double {
     var precedence = ["*": 3, "/": 3, "+": 2, "-": 2, "(": 1]
     var operatorList: [String] = []  //store operators
     var postfixList: [String] = []   //store numbers
-    var expressionList: [String] = Array(createExpressionList(infixExpression: infixExpression)) //calls function to separate the expression correctly
-    if expressionList.contains(".") {
-        expressionList = eliminateFloatProblem(&expressionList)
-    }
+    let expressionList: [String] = Array(createExpressionList(infixExpression: infixExpression)) //calls function to separate the expression correctly
     for each in expressionList {
         if symbolsArray.contains(each) != true {
             postfixList.append(each)
@@ -119,7 +116,6 @@ func infixToPostfix(infixExpression: [Character]) -> Double {
 //evaluation of postfix expression
 func postfixEvaluation(postfixExpression: [String]) -> Double {
     var operandList: [Double] = []
-    // let expressionList = Array(postfixExpression)
     let symbols: [String] = ["+","-","*","/","(",")","."]
     let symbolsBasedValues = ["+": 0.0, "-": 0.0, "*": 1.0, "/": 1.0]
     var result = 0.0
