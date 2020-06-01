@@ -4,16 +4,66 @@ Here the evaluation will happen based on precedence order as = (2*3)+3*5
                                                              = 6+3*5
                                                              = 6+15
                                                              = 21 */
-//convert infix to postfix expression
-func infixToPostfix(infixExpression: String) -> String {
-    var precedence: [Character: Int] = ["*": 3, "/": 3, "+": 2, "-": 2, "(": 1]
-    let numbers = "1234567890"
-    var operatorList: [Character] = []  //store operators
-    var postfixList: [Character] = []   //store numbers
-    var expressionList: [Character] = Array(createExpressionList(infixExpression: infixExpression)) //calls function to separate the expression correctly
-    expressionList.removeAll{$0 == "0"}
+import Foundation
+let expression = Array("1+2.2".replacingOccurrences(of:  " ", with: ""))  //remove the whitespaces
+let symbolsArray = ["+","-","*","/","(",")",".","^"]
+
+//creating infixExpression
+func createExpressionList(infixExpression: [Character]) -> [String] {
+    var temporaryValue = 0
+    var flag = 0
+    var expressionList: [String] = []
+    for var index in 0..<infixExpression.count {
+        if symbolsArray.contains(String(infixExpression[index])) != true {
+            temporaryValue *= 10
+            temporaryValue += (Int(String(infixExpression[index])) ?? 0)
+            flag = 1            
+        }
+        else {
+            if flag == 1 {
+                expressionList.append(String(temporaryValue))
+            }
+            expressionList.append(String(infixExpression[index]))
+            temporaryValue = 0
+            flag = 0
+            if String(infixExpression[index]) == "." , String(infixExpression[index + 1]) == "0" {
+                expressionList.append(String(infixExpression[index + 1]))
+            }
+        }
+        if index == infixExpression.count - 1 && symbolsArray.contains(String(infixExpression[index])) != true {
+            expressionList.append(String(temporaryValue))
+        }
+    }
+    return expressionList
+}
+
+func eliminateFloatProblem(_ expression: inout [String]) -> [String] {
+    for each in 0..<(expression.count - 1) {
+        if expression[each] == "." && expression[each + 1] != "0" {
+            expression[each - 1] = expression[each - 1] + expression[each] + expression[each + 1]
+            expression.remove(at: each)
+            expression.remove(at: each)
+        }
+        else if expression[each] == "." && expression[each + 1] == "0" {
+            expression[each - 1] = expression[each - 1] + expression[each] + expression[each + 1] + expression[each + 2]
+            expression.remove(at: each)
+            expression.remove(at: each)
+            expression.remove(at: each)
+        }
+    }
+    return expression
+}
+//convert infix to postfix
+func infixToPostfix(infixExpression: [Character]) -> [String] {
+    var precedence = ["*": 3, "/": 3, "+": 2, "-": 2, "(": 1]
+    var operatorList: [String] = []  //store operators
+    var postfixList: [String] = []   //store numbers
+    var expressionList: [String] = Array(createExpressionList(infixExpression: infixExpression)) //calls function to separate the expression correctly
+    if expressionList.contains(".") {
+        expressionList = eliminateFloatProblem(&expressionList)
+    }
     for each in expressionList {
-        if numbers.contains(each) {
+        if symbolsArray.contains(each) != true {
             postfixList.append(each)
         }
         else if each == "(" {
@@ -36,40 +86,16 @@ func infixToPostfix(infixExpression: String) -> String {
     while operatorList.count != 0 {
         postfixList.append(operatorList.removeLast())
     }
-    return String(postfixList)
+    return postfixList
 }
-//separate the expression correctly
-func createExpressionList(infixExpression: String) -> [Character] {
-    let infixExpression = Array(infixExpression)
-    let symbolsArray = ["+","-","*","/","(",")"]
-    var temporaryValue = 0
-    var expressionList: [Character] = []
-    for var index in 0..<infixExpression.count {
-        if symbolsArray.contains(String(infixExpression[index])) != true {
-            temporaryValue *= 10
-            temporaryValue += (Int(String(infixExpression[index])) ?? 0)
-            index += 1
-        }
-        else {
-            expressionList.append(Character(String(temporaryValue)))
-            expressionList.append(infixExpression[index])
-            temporaryValue = 0
-        }
-        if index == infixExpression.count && symbolsArray.contains(String(infixExpression[index - 1])) != true {
-            expressionList.append(Character(String(temporaryValue)))
-        }
-    }
-    return expressionList
-}
-
-//evaluate the postfix expression
-func postfixEvaluation(postfixExpression: String) -> Double {
+//evaluation of postfix expression
+func postfixEvaluation(postfixExpression: [String]) -> Double {
     var operandList: [Double] = []
-    let expressionList = Array(postfixExpression)
-    let numbers = "1234567890"
-    for each in expressionList {
-        if numbers.contains(each) {
-            operandList.append(Double(String(each))!)
+    // let expressionList = Array(postfixExpression)
+    let symbols: [String] = ["+","-","*","/","(",")","."]
+    for each in postfixExpression {
+        if symbols.contains(each) != true {
+            operandList.append(Double(String(each)) ?? 0)
         }
         else {
             let secondOperand = operandList.removeLast()
@@ -82,7 +108,7 @@ func postfixEvaluation(postfixExpression: String) -> Double {
 }
 
 //perform calculations based on  operators
-func doCalculation(operators: Character, firstOperand: Double, secondOperand: Double) -> Double {
+func doCalculation(operators: String, firstOperand: Double, secondOperand: Double) -> Double {
     switch operators {
         case "+" :
             return firstOperand + secondOperand
@@ -91,13 +117,10 @@ func doCalculation(operators: Character, firstOperand: Double, secondOperand: Do
         case "*" :
             return firstOperand * secondOperand
         case "/" :
-            return firstOperand / secondOperand
+            return firstOperand / secondOperand    
         default : 
             return 0                
     }
 }
-
-let expression = "((3+5)*5+(5-9))/5".replacingOccurrences(of:  " ", with: "")  //remove the whitespaces
-let postfixConversion: String = infixToPostfix(infixExpression: expression)
-let finalResult: Double = postfixEvaluation(postfixExpression: postfixConversion)
-print(expression + " = " + "\(finalResult)")
+let finalResult: Double = infixToPostfix(infixExpression: expression)
+print(String(expression) + "=" + "\(finalResult)")
