@@ -86,7 +86,7 @@ func infixToPostfix(infixExpression: [Character]) -> Double {
     while operatorList.count != 0 {
         postfixList.append(operatorList.removeLast())
     }
-    return postfixList
+    return postfixEvaluation(postfixExpression: postfixList)
 }
 //evaluation of postfix expression
 func postfixEvaluation(postfixExpression: [String]) -> Double {
