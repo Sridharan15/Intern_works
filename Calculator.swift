@@ -5,7 +5,7 @@ Here the evaluation will happen based on precedence order as = (2*3)+3*5
                                                              = 6+15
                                                              = 21 */
 import Foundation
-let expression = Array("(-1 + 3 (3+8(9+8)))".replacingOccurrences(of:  " ", with: ""))  //remove the whitespaces
+let expression = Array("22+3".replacingOccurrences(of:  " ", with: ""))  //remove the whitespaces
 let symbolsArray = ["+","-","*","/","(",")","^"]
 
 //creating infixExpression
@@ -19,7 +19,7 @@ func createExpressionList(infixExpression: [Character]) -> [String] {
         var startingIndex = 0
         if index < infixExpression.count - 1  {
             if infixExpression[index + 1] == "." {
-                startingIndex  = index
+                startingIndex = index 
                 while index < infixExpression.count - 1 {
                     if symbolsArray.contains(String(infixExpression[index])) != true {
                         index += 1
@@ -33,7 +33,15 @@ func createExpressionList(infixExpression: [Character]) -> [String] {
                         break
                     }
                 }
-                expressionList.append(String(infixExpression[startingIndex...index]))
+                if flag == 1 {
+                    temporaryValue *= 10
+                    temporaryValue += Int(String(infixExpression[startingIndex])) ?? 0
+                
+                }
+                let temporaryString = String(temporaryValue) + String(infixExpression[startingIndex + 1...index])
+                expressionList.append(temporaryString)
+                temporaryValue = 0 
+                flag = 0 
             
             }
             else if symbolsArray.contains(String(infixExpression[index])) != true {
