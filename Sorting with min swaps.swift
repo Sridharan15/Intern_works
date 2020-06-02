@@ -4,13 +4,15 @@ output: Sorted array with minimum swap count, sum of difference of values */
 
 let sizeOfTheArray = 5
 var arrayElements = [-5,-90,5,30,2]
-func doSelectionSort(elementsOfArray: inout [Int]) -> Int {
+
+//find min swaps required to sort an array
+func findMinimumSwapsRequiredToSortArray(elementsOfArray: inout [Int]) -> Int {
     var totalSwaps = 0
     for currentIndex in 0..<sizeOfTheArray {
         var minimumIndex = currentIndex
-        for eachElement in (currentIndex + 1)..<sizeOfTheArray {
-            if elementsOfArray[eachElement] < elementsOfArray[minimumIndex] {
-                minimumIndex = eachElement
+        for secondaryIndex in (currentIndex + 1)..<sizeOfTheArray {
+            if elementsOfArray[secondaryIndex] < elementsOfArray[minimumIndex] {
+                minimumIndex = secondaryIndex
             }
         }
         if minimumIndex != currentIndex {
@@ -21,7 +23,8 @@ func doSelectionSort(elementsOfArray: inout [Int]) -> Int {
     return totalSwaps
 }
 
-func doCalculation(indexPosition: Int)-> Int {
+//calculate sum of subtracted values till given index position
+func calculateSumOfSubtractedValuesOfArrayTillIndexPosition(_ indexPosition: Int)-> Int {
   var sumOfSubtractedValues = 0
   for each in stride(from: indexPosition, to: 0, by: -1) {
     sumOfSubtractedValues += arrayElements[each] - arrayElements[each - 1]
@@ -29,13 +32,13 @@ func doCalculation(indexPosition: Int)-> Int {
   return sumOfSubtractedValues
 }
 
-let swapCount = doSelectionSort(elementsOfArray: &arrayElements)
+let swapCount = findMinimumSwapsRequiredToSortArray(elementsOfArray: &arrayElements)
 print("Sorted Array is",arrayElements)
-print("Total Swap Count:",swapCount)
+print("Min Swap Count:",swapCount)
 
 let indexPosition = 3
 if indexPosition > 0 && indexPosition < sizeOfTheArray {
-  print("Sum of subtracted values is \(doCalculation(indexPosition: indexPosition))")
+  print("Sum of subtracted values is \(calculateSumOfSubtractedValuesOfArrayTillIndexPosition(indexPosition))")
 }
 else {
   print("Enter valid index position")
