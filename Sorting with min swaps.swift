@@ -6,7 +6,7 @@ let sizeOfTheArray = 5
 var arrayElements = [-5,-90,5,30,2]
 
 //find min swaps required to sort an array
-func findMinimumSwapsRequiredToSortArray(elementsOfArray: inout [Int]) -> Int {
+func performSelectionSortToFindMinimumSwaps(for elementsOfArray: inout [Int]) -> Int {
     var totalSwaps = 0
     for currentIndex in 0..<sizeOfTheArray {
         var minimumIndex = currentIndex
@@ -24,7 +24,7 @@ func findMinimumSwapsRequiredToSortArray(elementsOfArray: inout [Int]) -> Int {
 }
 
 //calculate sum of subtracted values till given index position
-func calculateSumOfSubtractedValuesOfArrayTillIndexPosition(_ indexPosition: Int)-> Int {
+func calculateSumOfSubtractedValuesForTheArray(till indexPosition: Int)-> Int {
   var sumOfSubtractedValues = 0
   for each in stride(from: indexPosition, to: 0, by: -1) {
     sumOfSubtractedValues += arrayElements[each] - arrayElements[each - 1]
@@ -32,13 +32,13 @@ func calculateSumOfSubtractedValuesOfArrayTillIndexPosition(_ indexPosition: Int
   return sumOfSubtractedValues
 }
 
-let swapCount = findMinimumSwapsRequiredToSortArray(elementsOfArray: &arrayElements)
+let swapCount = performSelectionSortToFindMinimumSwaps(for: &arrayElements)
 print("Sorted Array is",arrayElements)
 print("Min Swap Count:",swapCount)
 
 let indexPosition = 3
 if indexPosition > 0 && indexPosition < sizeOfTheArray {
-  print("Sum of subtracted values is \(calculateSumOfSubtractedValuesOfArrayTillIndexPosition(indexPosition))")
+  print("Sum of subtracted values is \(calculateSumOfSubtractedValuesForTheArray(till: indexPosition))")
 }
 else {
   print("Enter valid index position")
