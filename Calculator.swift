@@ -7,7 +7,38 @@ Here the evaluation will happen based on precedence order as = (2*3)+3*5
 import Foundation
 let expression = Array("22.2+3".replacingOccurrences(of:  " ", with: ""))  //remove the whitespaces
 let symbolsArray = ["+","-","*","/","(",")","^"]
-
+//convert infix to postfix
+func performArithmeticCalculationByConvertingInfixToPostfix(for infixExpression: [Character]) -> Double {
+    var precedence = ["*": 3, "/": 3, "+": 2, "-": 2, "(": 1]
+    var operatorList: [String] = []  //store operators
+    var postfixList: [String] = []   //store numbers
+    let expressionList: [String] = Array(createExpressionList(for: infixExpression)) //calls function to separate the expression correctly
+    for each in expressionList {
+        if symbolsArray.contains(each) != true {
+            postfixList.append(each)
+        }
+        else if each == "(" {
+            operatorList.append(each)
+        }
+        else if each == ")" {
+            var removedElement = operatorList.removeLast()
+            while "\(removedElement)" != "(" {
+                postfixList.append(removedElement)
+                removedElement = operatorList.removeLast()
+            }
+        }
+        else {
+            while operatorList.count != 0 && precedence[operatorList.last!]! >= precedence[each]! {
+                postfixList.append(operatorList.removeLast())
+            }
+            operatorList.append(each)
+        }
+    }
+    while operatorList.count != 0 {
+        postfixList.append(operatorList.removeLast())
+    }
+    return postfixEvaluation(for: postfixList)
+}
 //creating infixExpression
 func createExpressionList(for infixExpression: [Character]) -> [String] {
     var temporaryValue = 0
@@ -90,38 +121,6 @@ func createExpressionList(for infixExpression: [Character]) -> [String] {
     }
     return expressionList  
 }
-//convert infix to postfix
-func performCalculationByConvertingInfixToPostfix(for infixExpression: [Character]) -> Double {
-    var precedence = ["*": 3, "/": 3, "+": 2, "-": 2, "(": 1]
-    var operatorList: [String] = []  //store operators
-    var postfixList: [String] = []   //store numbers
-    let expressionList: [String] = Array(createExpressionList(for: infixExpression)) //calls function to separate the expression correctly
-    for each in expressionList {
-        if symbolsArray.contains(each) != true {
-            postfixList.append(each)
-        }
-        else if each == "(" {
-            operatorList.append(each)
-        }
-        else if each == ")" {
-            var removedElement = operatorList.removeLast()
-            while "\(removedElement)" != "(" {
-                postfixList.append(removedElement)
-                removedElement = operatorList.removeLast()
-            }
-        }
-        else {
-            while operatorList.count != 0 && precedence[operatorList.last!]! >= precedence[each]! {
-                postfixList.append(operatorList.removeLast())
-            }
-            operatorList.append(each)
-        }
-    }
-    while operatorList.count != 0 {
-        postfixList.append(operatorList.removeLast())
-    }
-    return postfixEvaluation(for: postfixList)
-}
 //evaluation of postfix expression
 func postfixEvaluation(for postfixExpression: [String]) -> Double {
     var operandList: [Double] = []
@@ -160,5 +159,5 @@ func performArithmeticOperation(of operators: String,for secondOperand: Double,a
             return 0                
     }
 }
-let finalResult: Double = performCalculationByConvertingInfixToPostfix(for: expression)
+let finalResult: Double = performArithmeticCalculationByConvertingInfixToPostfix(for: expression)
 print(String(expression) + "=" + "\(finalResult)")
