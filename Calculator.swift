@@ -5,11 +5,11 @@ Here the evaluation will happen based on precedence order as = (2*3)+3*5
                                                              = 6+15
                                                              = 21 */
 import Foundation
-let expression = Array("22+3".replacingOccurrences(of:  " ", with: ""))  //remove the whitespaces
+let expression = Array("22.2+3".replacingOccurrences(of:  " ", with: ""))  //remove the whitespaces
 let symbolsArray = ["+","-","*","/","(",")","^"]
 
 //creating infixExpression
-func createExpressionList(infixExpression: [Character]) -> [String] {
+func createExpressionList(for infixExpression: [Character]) -> [String] {
     var temporaryValue = 0
     var infixExpression = Array(infixExpression)
     var flag = 0
@@ -36,7 +36,9 @@ func createExpressionList(infixExpression: [Character]) -> [String] {
                 if flag == 1 {
                     temporaryValue *= 10
                     temporaryValue += Int(String(infixExpression[startingIndex])) ?? 0
-                
+                }
+                else {
+                    temporaryValue = Int(String(infixExpression[startingIndex])) ?? 0
                 }
                 let temporaryString = String(temporaryValue) + String(infixExpression[startingIndex + 1...index])
                 expressionList.append(temporaryString)
@@ -89,11 +91,11 @@ func createExpressionList(infixExpression: [Character]) -> [String] {
     return expressionList  
 }
 //convert infix to postfix
-func infixToPostfix(infixExpression: [Character]) -> Double {
+func performCalculationByConvertingInfixToPostfix(for infixExpression: [Character]) -> Double {
     var precedence = ["*": 3, "/": 3, "+": 2, "-": 2, "(": 1]
     var operatorList: [String] = []  //store operators
     var postfixList: [String] = []   //store numbers
-    let expressionList: [String] = Array(createExpressionList(infixExpression: infixExpression)) //calls function to separate the expression correctly
+    let expressionList: [String] = Array(createExpressionList(for: infixExpression)) //calls function to separate the expression correctly
     for each in expressionList {
         if symbolsArray.contains(each) != true {
             postfixList.append(each)
@@ -118,10 +120,10 @@ func infixToPostfix(infixExpression: [Character]) -> Double {
     while operatorList.count != 0 {
         postfixList.append(operatorList.removeLast())
     }
-    return postfixEvaluation(postfixExpression: postfixList)
+    return postfixEvaluation(for: postfixList)
 }
 //evaluation of postfix expression
-func postfixEvaluation(postfixExpression: [String]) -> Double {
+func postfixEvaluation(for postfixExpression: [String]) -> Double {
     var operandList: [Double] = []
     let symbols: [String] = ["+","-","*","/","(",")","."]
     let symbolsBasedValues = ["+": 0.0, "-": 0.0, "*": 1.0, "/": 1.0]
@@ -132,10 +134,10 @@ func postfixEvaluation(postfixExpression: [String]) -> Double {
         }
         else {
             if operandList.count == 1 {
-                result = doCalculation(operators: each, secondOperand: operandList.removeLast(), firstOperand: symbolsBasedValues[each]!)
+                result = performArithmeticOperation(of: each, for: operandList.removeLast(),and: symbolsBasedValues[each]!)
             }
             else {
-                result = doCalculation(operators: each, secondOperand: operandList.removeLast(), firstOperand: operandList.removeLast())
+                result = performArithmeticOperation(of: each, for: operandList.removeLast(),and: operandList.removeLast())
             }
             operandList.append(result)
         }
@@ -144,7 +146,7 @@ func postfixEvaluation(postfixExpression: [String]) -> Double {
 }
 
 //perform calculations based on  operators
-func doCalculation(operators: String, secondOperand: Double, firstOperand: Double) -> Double {
+func performArithmeticOperation(of operators: String,for secondOperand: Double,and firstOperand: Double) -> Double {
     switch operators {
         case "+" :
             return firstOperand + secondOperand
@@ -158,5 +160,5 @@ func doCalculation(operators: String, secondOperand: Double, firstOperand: Doubl
             return 0                
     }
 }
-let finalResult: Double = infixToPostfix(infixExpression: expression)
+let finalResult: Double = performCalculationByConvertingInfixToPostfix(for: expression)
 print(String(expression) + "=" + "\(finalResult)")
