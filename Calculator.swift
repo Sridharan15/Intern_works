@@ -67,14 +67,14 @@ func createExpressionList(for infixExpression: [Character]) -> [String] {
                 if flag == 1 {
                     temporaryValue *= 10
                     temporaryValue += Int(String(infixExpression[startingIndex])) ?? 0
+                    let temporaryString = String(temporaryValue) + String(infixExpression[startingIndex + 1...index])
+                    expressionList.append(temporaryString)
+                    temporaryValue = 0 
+                    flag = 0 
                 }
                 else {
-                    temporaryValue = Int(String(infixExpression[startingIndex])) ?? 0
+                    expressionList.append(String(infixExpression[startingIndex...index]))              
                 }
-                let temporaryString = String(temporaryValue) + String(infixExpression[startingIndex + 1...index])
-                expressionList.append(temporaryString)
-                temporaryValue = 0 
-                flag = 0 
             
             }
             else if symbolsArray.contains(String(infixExpression[index])) != true {
