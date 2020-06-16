@@ -49,7 +49,7 @@ func createExpressionList(for infixExpression: [Character]) -> [String] {
     while index < infixExpression.count  {
         var startingIndex = 0
         if index < infixExpression.count - 1  {
-            if infixExpression[index + 1] == "." {
+            if infixExpression[index + 1] == "."  && symbolsArray.contains(String(infixExpression[index])) != true || infixExpression[index] == "."{
                 startingIndex = index 
                 while index < infixExpression.count - 1 {
                     if symbolsArray.contains(String(infixExpression[index])) != true {
