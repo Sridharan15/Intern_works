@@ -1,0 +1,4 @@
+let n = 5
+let inputArray = [1,2,3,5]
+let missingNumber = (n * (n + 1))/2 - inputArray.reduce(0,+)
+print(missingNumber)
