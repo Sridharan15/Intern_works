@@ -1,0 +1,24 @@
+var arr = [2,5,4,6,3,7,8]
+var temp = [Int]()
+var result = [[Int]]()
+let sum = 11
+var i = 0
+var j = i + 1
+while(i < (arr.count - 1)) {
+    if(arr[i] + arr[j] == sum) {
+        temp.append(arr[i])
+        temp.append(arr[j])
+        result.append(temp)
+    }
+    if(j == arr.count - 1) {
+        i = i + 1
+        j = i + 1
+    }else {
+        if(i == arr.count - 2){
+            break
+        }
+        j = j + 1
+    }
+    temp.removeAll()
+}
+print(result)
