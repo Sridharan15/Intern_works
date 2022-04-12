@@ -29,3 +29,4 @@ while(i < row && j < column) {
         j += 1
     }
 }
+print(result)
